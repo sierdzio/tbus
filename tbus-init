@@ -20,5 +20,8 @@ fi
 TEMPLATEDIR=$(tbus-info --template-dir)
 
 cp -R $TEMPLATEDIR/. $OUTDIR
+git init -q
+git add .
+git commit -q -m 'Initialise tbus repository'
 
 echo "Done."

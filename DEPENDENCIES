@@ -1,0 +1,9 @@
+tbus dependencies are likely to change over time. The project has started as
+a collection of bash scripts but it's probable that it will migrate some of them
+to C++.
+
+So, current list is as follows:
+ - bash, ls, cat, dirname
+ - git
+ - transmission-cli (planned, temporary)
+ - gpg2 (planned)
