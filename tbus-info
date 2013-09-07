@@ -23,7 +23,7 @@ if [ "${1}" = "-t" ] || [ "${1}" = "--template-dir" ]; then
     exit
   fi
 
-  TEMP=$(which tbus)/$TEMPLATES
+  TEMP=$(dirname $(which tbus))/$TEMPLATES
   if [ -d "$TEMP" ]; then
     echo $TEMP
     exit
