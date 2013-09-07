@@ -6,19 +6,29 @@ if [ "${1}" = "-h" ] || [ "${1}" = "--help" ]; then
   exit
 fi
 
+
+
 OUTDIR=""
 GREETMESSAGE="Creating a new tbus repository in "
 
 if [ -z "${1}" ]; then
-  echo $GREETMESSAGE "current directory"
+  GREETMESSAGE=$GREETMESSAGE"current directory"
   OUTDIR=$PWD
 else
-  ehco $GREETMESSAGE ${1}
+  GREETMESSAGE=$GREETMESSAGE"${1}"
   OUTDIR=${1}
 fi
 
+if [ -d "$OUTDIR/.git" ]; then
+  echo "Directory already contains a git repository, tbus-init cannot continue"
+  exit
+fi
+
+echo $GREETMESSAGE
+
 TEMPLATEDIR=$(tbus-info --template-dir)
 
+cd $OUTDIR
 cp -R $TEMPLATEDIR/. $OUTDIR
 git init -q
 git add .

@@ -15,7 +15,8 @@ if [ "${1}" = "-l" ] || [ "${1}" = "--license" ]; then
 fi
 
 if [ "${1}" = "init" ]; then
-  tbus-init
+  shift
+  tbus-init "$@"
   exit
 fi
 
