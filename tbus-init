@@ -19,9 +19,6 @@ fi
 
 TEMPLATEDIR=$(tbus-info --template-dir)
 
-#cd OUTDIR
-#cp -R TEMPLATEDIR .
-
-echo $TEMPLATEDIR
+cp -R $TEMPLATEDIR/. $OUTDIR
 
 echo "Done."
