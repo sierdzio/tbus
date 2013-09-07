@@ -1,1 +1,6 @@
- 
+# .gitignore file for tbus
+*.autosave
+*.pro.user*
+*.kate-swp
+*~
+Makefile
