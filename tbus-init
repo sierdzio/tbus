@@ -1,0 +1,27 @@
+#!/bin/sh
+# tbus-init can be used to initialise a new tbus repository
+if [ "${1}" = "-h" ] || [ "${1}" = "--help" ]; then
+  echo "tbus-init"
+  echo "tbus-init can be used to initialise a new tbus repository"
+  exit
+fi
+
+OUTDIR=""
+GREETMESSAGE="Creating a new tbus repository in "
+
+if [ -z "${1}" ]; then
+  echo $GREETMESSAGE "current directory"
+  OUTDIR=$PWD
+else
+  ehco $GREETMESSAGE ${1}
+  OUTDIR=${1}
+fi
+
+TEMPLATEDIR=$(tbus-info --template-dir)
+
+#cd OUTDIR
+#cp -R TEMPLATEDIR .
+
+echo $TEMPLATEDIR
+
+echo "Done."

@@ -1,1 +1,9 @@
- 
+tbus - torrent-based update system
+Copyright (c) 2013 by Tomasz Siekierda, sierdzio@gmail.com
+
+This product is free software, see the LICENSE file for more details.
+
+tbus is an automated system that aims to make software distribution easy ad cheap.
+For small vendors, it has the benefit of not requiring any working serwer, or broad
+upload bandwidth. For big vendors, it allows to lower server load. For everybody it
+means higher transfers, and greater availability.

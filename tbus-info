@@ -1,0 +1,40 @@
+#!/bin/sh
+# tbus-info can be used to gather information about tbus installation.
+if [ "${1}" = "-h" ] || [ "${1}" = "--help" ]; then
+  echo "tbus-info [option]"
+  echo ""
+  echo "-h or --help - display this message"
+  echo "-t or --template-dir - return the directory where templates are kept"
+  exit
+fi
+
+if [ "${1}" = "-t" ] || [ "${1}" = "--template-dir" ]; then
+  TEMPLATES="templates"
+
+  TEMP=$TBUSDIR/$TEMPLATES
+  if [ -d "$TEMP" ]; then
+    echo $TEMP
+    exit
+  fi
+
+  TEMP=$HOME/.tbus/$TEMPLATES
+  if [ -d "$TEMP" ]; then
+    echo $TEMP
+    exit
+  fi
+
+  TEMP=$(which tbus)/$TEMPLATES
+  if [ -d "$TEMP" ]; then
+    echo $TEMP
+    exit
+  fi
+
+  TEMP=$PWD/$TEMPLATES
+  if [ -d "$TEMP" ]; then
+    echo $TEMP
+    exit
+  fi
+
+  echo ""
+  exit
+fi
