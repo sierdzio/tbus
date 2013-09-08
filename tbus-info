@@ -1,10 +1,11 @@
 #!/bin/sh
 # tbus-info can be used to gather information about tbus installation.
 if [ "${1}" = "-h" ] || [ "${1}" = "--help" ]; then
-  echo "tbus-info [option]"
-  echo ""
-  echo "-h or --help - display this message"
-  echo "-t or --template-dir - return the directory where templates are kept"
+  echo "tbus-info [option]
+
+Options:
+  -h or --help - display this message
+  -t or --template-dir - return the directory where templates are kept"
   exit
 fi
 

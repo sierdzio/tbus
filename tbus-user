@@ -1,0 +1,12 @@
+#!/bin/sh
+# tbus-user can be used to manage authorised users (committers).
+if [ "${1}" = "-h" ] || [ "${1}" = "--help" ]; then
+  echo "tbus-user
+tbus-user can be used to manage authorised users (committers)
+
+Options:
+  - add (gpg ID) - add new user. You need to specify GPG signing key ID
+  - modify (old gpg ID) (new gpg ID) - modify an existing user. You will
+\tneed to authorise that operation with a valid signature."
+  exit
+fi

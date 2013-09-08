@@ -1,0 +1,18 @@
+#!/bin/sh
+# tbus-add can be used to create .torrent files from given data.
+# It can update old files or add completely new ones.
+if [ "${1}" = "-h" ] || [ "${1}" = "--help" ]; then
+  echo "tbus-add [option] files and directories
+
+If you specify a directory, or multiple files, tbus will create single
+.torrent file for all that data, unless you pass --separate (-s).
+
+Options:
+  -h or --help - display this message
+  -o or --output - specify output directory/ filename. If omitted, tbus will
+\tTry to fit it into current structure of the repository
+  -s or --separate - create a separate .torrent file for all input files
+  -d or --dont-overwrite - if output file already exists, tbus will ask
+\t for a different name"
+  exit
+fi

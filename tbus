@@ -1,10 +1,10 @@
 #!/bin/sh
 # Main tbus script
 if [ "${1}" = "-h" ] || [ "${1}" = "--help" ]; then
-  echo "tbus - torrent-based update system"
-  echo "Copyright (c) 2013 by Tomasz Siekierda, sierdzio@gmail.com"
-  echo ""
-  echo "This is free software, for more info see the LICENSE file, or run tbus -l"
+  echo "tbus - torrent-based update system
+Copyright (c) 2013 by Tomasz Siekierda, sierdzio@gmail.com
+
+This is free software, for more info see the LICENSE file, or run tbus -l"
   exit
 fi
 
@@ -17,6 +17,18 @@ fi
 if [ "${1}" = "init" ]; then
   shift
   tbus-init "$@"
+  exit
+fi
+
+if [ "${1}" = "add" ]; then
+  shift
+  tbus-add "$@"
+  exit
+fi
+
+if [ "${1}" = "user" ]; then
+  shift
+  tbus-user "$@"
   exit
 fi
 

@@ -1,8 +1,8 @@
 #!/bin/sh
 # tbus-init can be used to initialise a new tbus repository
 if [ "${1}" = "-h" ] || [ "${1}" = "--help" ]; then
-  echo "tbus-init"
-  echo "tbus-init can be used to initialise a new tbus repository"
+  echo "tbus-init
+  tbus-init can be used to initialise a new tbus repository"
   exit
 fi
 
