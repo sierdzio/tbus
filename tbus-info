@@ -35,6 +35,8 @@ if [ "${1}" = "-t" ] || [ "${1}" = "--template-dir" ]; then
     exit
   fi
 
-  echo ""
-  exit
+  echo "Could not locate template directory. Please check your tbus installation."
+  echo "tbus looks for templates in \$TBUSDIR/templates, \$HOME/.tbus/templates,"
+  echo "\$PWD/templates and in directory where tbus script resides."
+  exit 1
 fi

@@ -6,8 +6,6 @@ if [ "${1}" = "-h" ] || [ "${1}" = "--help" ]; then
   exit
 fi
 
-
-
 OUTDIR=""
 GREETMESSAGE="Creating a new tbus repository in "
 
@@ -27,6 +25,12 @@ fi
 echo $GREETMESSAGE
 
 TEMPLATEDIR=$(tbus-info --template-dir)
+
+# Bail out if no template dir is found
+if [ $? -ne 0 ]; then
+  echo $TEMPLATEDIR
+  exit 1
+fi
 
 cd $OUTDIR
 cp -R $TEMPLATEDIR/. $OUTDIR
