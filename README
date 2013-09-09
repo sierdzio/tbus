@@ -11,3 +11,7 @@ is not operational.
 
 tbus combines gpg, git and torrent protocol to make sure that all data is properly
 signed, downloaded without errors.
+
+WARNING: this project is in very early stages of development. Barely anything works
+at the moment. Feel free to look around (and submit patches! :-)), but don't expect
+too much just yet.

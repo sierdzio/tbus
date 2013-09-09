@@ -2,11 +2,14 @@
 # tbus-user can be used to manage authorised users (committers).
 if [ "${1}" = "-h" ] || [ "${1}" = "--help" ]; then
   echo "tbus-user
-tbus-user can be used to manage authorised users (committers)
+tbus-user can be used to manage authorised users (committers). You will need to
+authorise all operations with a valid signature.
 
 Options:
   - add (gpg ID) - add new user. You need to specify GPG signing key ID
-  - modify (old gpg ID) (new gpg ID) - modify an existing user. You will
-\tneed to authorise that operation with a valid signature."
+  - modify (old gpg ID) (new gpg ID) - modify an existing user
+  - change (old gpg ID) (new gpg ID) - same as modify
+  - remove (gpg ID) - remove an user
+  - delete (gpg ID) - same as remove"
   exit
 fi
