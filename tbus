@@ -8,6 +8,11 @@ This is free software, for more info see the LICENSE file, or run tbus -l"
   exit
 fi
 
+if [ "${1}" = "-v" ] || [ "${1}" = "--version" ]; then
+  echo "tbus 0.0.1"
+  exit
+fi
+
 if [ "${1}" = "-l" ] || [ "${1}" = "--license" ]; then
   cat ./LICENSE
   echo ""
@@ -29,6 +34,12 @@ fi
 if [ "${1}" = "user" ]; then
   shift
   tbus-user "$@"
+  exit
+fi
+
+if [ "${1}" = "clone" ] || [ "${1}" = "connect" ]; then
+  shift
+  tbus-clone "$@"
   exit
 fi
 

@@ -1,0 +1,6 @@
+#!/bin/bash
+# Clone, connect to existing repositories
+if [ "${1}" = "-h" ] || [ "${1}" = "--help" ]; then
+  echo "tbus-clone - used to connect to existing repository"
+  exit
+fi
