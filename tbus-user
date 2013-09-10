@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # tbus-user can be used to manage authorised users (committers).
 if [ "${1}" = "-h" ] || [ "${1}" = "--help" ]; then
   echo "tbus-user

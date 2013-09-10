@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # tbus-add can be used to create .torrent files from given data.
 # It can update old files or add completely new ones.
 if [ "${1}" = "-h" ] || [ "${1}" = "--help" ]; then
@@ -16,3 +16,41 @@ Options:
 \t for a different name"
   exit
 fi
+
+# Parse command line arguments
+INPUT=()
+OUTPUT=""
+SEPARATE=false
+OVERWRITE=true
+
+while [ -n "${1}" ] ; do
+  case "${1}" in
+    --output | -o)
+      if [ -z "${OUTPUT}" ]; then
+        OUTPUT="${2}"
+      fi
+      shift 2
+      ;;
+    --separate | -s)
+      SEPARATE=true
+      shift
+      ;;
+    --dont-overwrite | -d)
+      OVERWRITE=false
+      shift
+      ;;
+    *)
+      INPUT+=(${1})
+      shift
+      ;;
+  esac
+done
+
+# Test parsing
+#echo "Test: OUTPUT="$OUTPUT", SEPARATE="$SEPARATE", OVERWRITE="$OVERWRITE
+#echo "Array size: ${#INPUT[*]}"
+
+#for item in ${INPUT[*]}
+#do
+#  echo $item
+#done
