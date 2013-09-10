@@ -13,22 +13,22 @@ Options:
 \tTry to fit it into current structure of the repository
   -s or --separate - create a separate .torrent file for all input files
   -d or --dont-overwrite - if output file already exists, tbus will ask
-\t for a different name"
+\t for a different name
+  -c or --comment - add given comment to all generated torrent files"
   exit
 fi
 
 # Parse command line arguments
 INPUT=()
-OUTPUT=""
+OUTPUT="-1"
+COMMENT="-1"
 SEPARATE=false
 OVERWRITE=true
 
 while [ -n "${1}" ] ; do
   case "${1}" in
     --output | -o)
-      if [ -z "${OUTPUT}" ]; then
-        OUTPUT="${2}"
-      fi
+      OUTPUT="${2}"
       shift 2
       ;;
     --separate | -s)
@@ -39,6 +39,10 @@ while [ -n "${1}" ] ; do
       OVERWRITE=false
       shift
       ;;
+    --comment | -c)
+      COMMENT="${2}"
+      shift 2
+      ;;
     *)
       INPUT+=(${1})
       shift
@@ -46,11 +50,72 @@ while [ -n "${1}" ] ; do
   esac
 done
 
-# Test parsing
-#echo "Test: OUTPUT="$OUTPUT", SEPARATE="$SEPARATE", OVERWRITE="$OVERWRITE
-#echo "Array size: ${#INPUT[*]}"
+testParsing ()
+{
+  echo "Test: OUTPUT="$OUTPUT", SEPARATE="$SEPARATE", OVERWRITE="$OVERWRITE", COMMENT="$COMMENT
+  echo "Array size: ${#INPUT[*]}"
 
-#for item in ${INPUT[*]}
-#do
-#  echo $item
-#done
+  for item in ${INPUT[*]}
+  do
+    echo $item
+  done
+}
+
+if [ ${#INPUT[*]} == 0 ]; then
+  echo "No input file specified, bailing out"
+  exit
+fi
+
+# Uncomment to display parser output data
+#testParsing
+
+addTorrent ()
+{
+  comment="$1"
+  output="$2"
+  input="$3"
+  overwrite="$4"
+
+  OUTPUTFILENAME=""
+  if [[ $output != *.torrent ]]; then
+  OUTPUTFILENAME=$output".torrent"
+  fi
+
+  if [ -f "$OUTPUTFILENAME" ]; then
+    if [ $overwrite == true ]; then
+      rm $OUTPUTFILENAME
+    else
+      echo "Output file "$OUTPUTFILENAME" already exists. To overwrite, don't use -d option"
+      exit 1
+    fi
+  fi
+
+  arguments=""
+
+  if [ "$comment" != "-1" ]; then
+    arguments=" -c "$comment
+  fi
+
+  if [ "$output" == "-1" ]; then
+    $output=${input[1]}
+  fi
+
+  arguments=$arguments" -o "$output
+
+  echo "transmission-create"$arguments" "$input
+}
+
+
+if [ $SEPARATE == true ]; then
+  for item in ${INPUT[*]}
+  do
+    addTorrent "$COMMENT" "$OUTPUT" "$item" "$OVERWRITE"
+  done
+else
+  INPUTSTRING=""
+  for item in ${INPUT[*]}
+  do
+    INPUTSTRING=$item" "$INPUTSTRING
+  done
+  addTorrent "$COMMENT" "$OUTPUT" "$INPUTSTRING" "$OVERWRITE"
+fi

@@ -7,6 +7,8 @@ specified, it will run in current directory.
 
 Options:
   -d or --delete - removes the repository instead of creating a new one"
+  # Possible additions:
+  # --name - repository name
   exit
 fi
 
