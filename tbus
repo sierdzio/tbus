@@ -15,6 +15,7 @@ Options:
 Commands:
  - init - initializes a new repository
  - add - adds data to an existing repository
+ - commit - commit staged changes
  - user - allows to manage authorised users
  - clone or connect - clones and existing repository
 "

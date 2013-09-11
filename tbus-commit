@@ -1,0 +1,11 @@
+#!/bin/bash
+# Commit changes made to the working tree of the repository.
+if [ "${1}" = "-h" ] || [ "${1}" = "--help" ]; then
+  echo "tbus-commit - used to commit changes made to the working tree of the
+
+Committing requires gpg signature of a person listed in pubkeys directory. If
+you wan to make unauthorised changes, use git commit instead. Unauthorised changes
+will not be accepted by other peers."
+  exit
+fi
+

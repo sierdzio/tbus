@@ -1,6 +1,10 @@
 #!/bin/bash
 # Clone, connect to existing repositories
 if [ "${1}" = "-h" ] || [ "${1}" = "--help" ]; then
-  echo "tbus-clone - used to connect to existing repository"
+  echo "tbus-clone - used to connect to existing repository
+
+At the moment this command is a synonym to git clone."
   exit
 fi
+
+git clone "$@"

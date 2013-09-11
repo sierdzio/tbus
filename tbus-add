@@ -100,9 +100,9 @@ addTorrent ()
     $output=${input[1]}
   fi
 
-  arguments=$arguments" -o "$output
+  arguments=$arguments" -o "$output" "$input
 
-  echo "transmission-create"$arguments" "$input
+  echo "transmission-create"$arguments
 }
 
 
