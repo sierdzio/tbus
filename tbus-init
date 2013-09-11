@@ -8,8 +8,12 @@ specified, it will run in current directory.
 Options:
   -n or --name - repository name
   -d or --delete - removes the repository instead of creating a new one
-  -g or --gpg  - GPG ID to add to the repository (can be used many times)
+  -g or --gpg  - GPG ID to add to the repository (can be used many times). Specify
+  \there the email address you used to register your key
   -t or --tracker - add given tracker to the list (can be used many times)
+
+Example invokation:
+  tbus init -t http://test.pl -g tomasztestowy@gmail.com -t http://www.com -n Tom
 "
   exit
 fi
@@ -93,22 +97,23 @@ cp -R $TEMPLATEDIR/. $OUTPUT
 dd if=/dev/urandom iflag=fullblock of=$PWD/.seed bs=512k count=1 status=none
 
 # Add root torrent file
-transmission-create -c 'root torrent file for this tbus repository: '$NAME -o .root.torrent .seed
+TRACKERARGS=""
+for item in ${TRACKERS[*]}
+do
+  TRACKERARGS=$TRACKERARGS" -t $item"
+done
+transmission-create -c 'root torrent file for this tbus repository: '$NAME -o .root.torrent$TRACKERARGS .seed
 
 # Add all GPG IDs
 for item in ${GPGIDS[*]}
 do
-  echo $item
-  # TODO: add pubkeys for given GPG id
-  gpg2 --armour --export $NAME --output $NAME-$item.asc
+  gpg --export $item > pubkeys/$NAME.asc
 done
 
 # Add all trackers
 for item in ${TRACKERS[*]}
 do
-  echo $item
-  cat $item >> trackers
-  # TODO: look for duplicates!
+  echo "$item" >> trackers
 done
 
 # Initialise git repository
