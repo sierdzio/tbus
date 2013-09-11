@@ -5,7 +5,13 @@ if [ "${1}" = "-h" ] || [ "${1}" = "--help" ]; then
 
 Options:
   -h or --help - display this message
-  -t or --template-dir - return the directory where templates are kept"
+  -t or --template-dir - return the directory where templates are kept
+  -v or --version - return tbus version"
+  exit
+fi
+
+if [ "${1}" = "-v" ] || [ "${1}" = "--version" ]; then
+  echo "0.0.1"
   exit
 fi
 

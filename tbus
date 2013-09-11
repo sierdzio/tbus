@@ -27,7 +27,7 @@ if [ "${1}" = "-h" ] || [ "${1}" = "--help" ]; then
 fi
 
 if [ "${1}" = "-v" ] || [ "${1}" = "--version" ]; then
-  echo "tbus 0.0.1"
+  echo "tbus "$(tbus-info -v)
   exit
 fi
 

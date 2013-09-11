@@ -9,6 +9,8 @@ Options:
   -d or --delete - removes the repository instead of creating a new one"
   # Possible additions:
   # --name - repository name
+  # --gpg  - GPG ID to add to the repository (can be used many times)
+  # --tracker - add given tracker to the list (can be used many times)
   exit
 fi
 
