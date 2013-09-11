@@ -2,3 +2,4 @@
  - add bash auto completion
  - consider adding a unified command line parser
  - move to C++ ;)
+ - add tests and automated regression test suite for the whole project

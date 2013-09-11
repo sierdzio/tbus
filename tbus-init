@@ -6,30 +6,62 @@ tbus-init can be used to initialise a new tbus repository. When no path is
 specified, it will run in current directory.
 
 Options:
-  -d or --delete - removes the repository instead of creating a new one"
-  # Possible additions:
-  # --name - repository name
-  # --gpg  - GPG ID to add to the repository (can be used many times)
-  # --tracker - add given tracker to the list (can be used many times)
+  -n or --name - repository name
+  -d or --delete - removes the repository instead of creating a new one
+  -g or --gpg  - GPG ID to add to the repository (can be used many times)
+  -t or --tracker - add given tracker to the list (can be used many times)
+"
   exit
 fi
 
-if [ "${1}" = "-d" ] || [ "${1}" = "--delete" ]; then
-  DIRMESSAGE=""
-  OUTDIR=""
-  if [ -z "${2}" ]; then
-    DIRMESSAGE="current directory"
-    OUTDIR=$PWD
-  else
-    DIRMESSAGE=${2}
-    OUTDIR=${2}
-  fi
+# Parse command line arguments
+GPGIDS=()
+TRACKERS=()
+OUTPUT="-1"
+NAME="-1"
+DELETE=false
 
-  if [ -d "$OUTDIR/.git" ] || [ -d "$OUTDIR/templates" ] || [ -d "$OUTDIR/pubkeys" ] \
-     || [ -f "$OUTDIR/.tbusconfig" ] || [ -f "$OUTDIR/.gitignore" ]; then
+while [ -n "${1}" ] ; do
+  case "${1}" in
+    --name | -n)
+      NAME="${2}"
+      shift 2
+      ;;
+    --delete | -d)
+      DELETE=true
+      shift
+      break
+      ;;
+    --gpg | -g)
+      GPGIDS+=(${2})
+      shift 2
+      ;;
+    --tracker | -t)
+      TRACKERS+=(${2})
+      shift 2
+      ;;
+    *)
+      OUTPUT="${1}"
+      shift
+      break
+      ;;
+  esac
+done
+
+DIRMESSAGE=""
+if [ "$OUTPUT" == "-1" ]; then
+  DIRMESSAGE="current directory"
+  OUTPUT=$PWD
+else
+  DIRMESSAGE=${2}
+fi
+
+if [ "${1}" = "-d" ] || [ "${1}" = "--delete" ]; then
+  if [ -d "$OUTPUT/.git" ] || [ -d "$OUTPUT/templates" ] || [ -d "$OUTPUT/pubkeys" ] \
+     || [ -f "$OUTPUT/.tbusconfig" ] || [ -f "$OUTPUT/.gitignore" ]; then
     echo "Removing tbus repository from" $DIRMESSAGE
-    rm -rf $OUTDIR/
-    mkdir $OUTDIR
+    rm -rf $OUTPUT/
+    mkdir $OUTPUT
     exit
   fi
 
@@ -37,45 +69,47 @@ if [ "${1}" = "-d" ] || [ "${1}" = "--delete" ]; then
   exit
 fi
 
-OUTDIR=""
-DIRMESSAGE=""
-GREETMESSAGE="Creating a new tbus repository in"
-
-if [ -z "${1}" ]; then
-  DIRMESSAGE="current directory"
-  OUTDIR=$PWD
-else
-  DIRMESSAGE="${1}"
-  OUTDIR=${1}
-fi
-
-if [ -d "$OUTDIR/.git" ]; then
+if [ -d "$OUTPUT/.git" ]; then
   echo "Directory already contains a git repository, tbus-init cannot continue"
   exit
 fi
 
-echo $GREETMESSAGE $DIRMESSAGE
+echo "Creating a new tbus repository in" $DIRMESSAGE
 
 TEMPLATEDIR=$(tbus-info --template-dir)
 
 # Bail out if no template dir is found
 if [ $? -ne 0 ]; then
-  echo $TEMPLATEDIR
+  echo "Template dir was not found! "$TEMPLATEDIR
   exit 1
 fi
 
-cd $OUTDIR
+cd $OUTPUT
 
 # Copy templates
-cp -R $TEMPLATEDIR/. $OUTDIR
+cp -R $TEMPLATEDIR/. $OUTPUT
 
 # Create random seed file
-#cat "Seed data for root torrent file.\n" > .seed
 dd if=/dev/urandom iflag=fullblock of=$PWD/.seed bs=512k count=1 status=none
 
 # Add root torrent file
-transmission-create -c 'root torrent file for this tbus repository' -o .root.torrent .seed
-# -s 32
+transmission-create -c 'root torrent file for this tbus repository: '$NAME -o .root.torrent .seed
+
+# Add all GPG IDs
+for item in ${GPGIDS[*]}
+do
+  echo $item
+  # TODO: add pubkeys for given GPG id
+  gpg2 --armour --export $NAME --output $NAME-$item.asc
+done
+
+# Add all trackers
+for item in ${TRACKERS[*]}
+do
+  echo $item
+  cat $item >> trackers
+  # TODO: look for duplicates!
+done
 
 # Initialise git repository
 git init -q
