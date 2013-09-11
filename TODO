@@ -1,0 +1,4 @@
+# TODO in tbus:
+ - add bash auto completion
+ - consider adding a unified command line parser
+ - move to C++ ;)

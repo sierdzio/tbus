@@ -1,10 +1,27 @@
 #!/bin/bash
 # Main tbus script
-if [ "${1}" = "-h" ] || [ "${1}" = "--help" ]; then
+help () {
   echo "tbus - torrent-based update system
 Copyright (c) 2013 by Tomasz Siekierda, sierdzio@gmail.com
 
-This is free software, for more info see the LICENSE file, or run tbus -l"
+This is free software, for more info see the LICENSE file, or run tbus -l
+
+Options:
+ -h or --help - display this message
+ -l or --license - display license file
+ -v or --version - display tbus version information
+ -r or --readme - display contents of readme file
+
+Commands:
+ - init - initializes a new repository
+ - add - adds data to an existing repository
+ - user - allows to manage authorised users
+ - clone or connect - clones and existing repository
+"
+}
+
+if [ "${1}" = "-h" ] || [ "${1}" = "--help" ]; then
+  help
   exit
 fi
 
@@ -14,8 +31,15 @@ if [ "${1}" = "-v" ] || [ "${1}" = "--version" ]; then
 fi
 
 if [ "${1}" = "-l" ] || [ "${1}" = "--license" ]; then
-  cat ./LICENSE
+  # Use path detection from tbus-info
+  cat $(dirname $(which tbus))/LICENSE
   echo ""
+  exit
+fi
+
+if [ "${1}" = "-r" ] || [ "${1}" = "--readme" ]; then
+  # Use path detection from tbus-info
+  less $(dirname $(which tbus))/README
   exit
 fi
 
@@ -43,4 +67,4 @@ if [ "${1}" = "clone" ] || [ "${1}" = "connect" ]; then
   exit
 fi
 
-echo "tbus does not do anything useful yet"
+help

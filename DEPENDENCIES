@@ -5,5 +5,5 @@ to C++.
 So, current list is as follows:
  - bash, ls, cat, dirname
  - git
- - transmission-cli (planned, temporary)
+ - transmission-cli (temporary), libktorrent (planned)
  - gpg2 (planned)

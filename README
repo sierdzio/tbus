@@ -3,10 +3,11 @@ Copyright (c) 2013 by Tomasz Siekierda, sierdzio@gmail.com
 
 This product is free software, see the LICENSE file for more details.
 
-tbus is an automated system that aims to make software distribution easy and cheap.
-For small vendors, it has the benefit of not requiring any working server, or broad
-upload bandwidth. For big vendors, it allows to lower server load. For everybody it
-means higher transfers, and greater availability of software, even if "main server"
+tbus is an automated and distributed update system that aims to make software
+distribution easy and cheap. For small vendors, it has the benefit of
+not requiring any working server, or high upload bandwidth.
+For big vendors, it allows to lower server load. For everybody it means higher
+transfers, and greater availability of software, even if "main server"
 is not operational.
 
 tbus combines gpg, git and torrent protocol to make sure that all data is properly
