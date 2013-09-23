@@ -7,3 +7,5 @@ Makefile
 
 # tbus stuff
 .seed
+gpgsigned.txt
+gpgtest.txt

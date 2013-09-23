@@ -19,42 +19,30 @@ if [ "${1}" = "-h" ] || [ "${1}" = "--help" ] || [ -z "${2}" ]; then
   exit
 fi
 
-# TODO: authorise current user before proceeding CRITICAL
-# Or, at the very least, check authorisation while signing the commit. Be careful
-# not to use the newly added key.
-# Best: do both!
+# TODO: Also check authorisation while signing the commit
+# TODO: Export this so that it can be used in other scripts
+# TODO: Make it more intelligent when it comes to paths (use tbus-info or dirname "${0}")
 authenticate () {
-  echo "Please sign-in using your GPG account"
+  echo "Please sign-in using your GPG account. Please make sure to log into
+a valid GPG account (found in pubkeys directory)"
   while true; do
     read -p "Login:" login
-    if [ "$login.asc" -f pubkeys ]; then
+    if [ -f "pubkeys/$login.asc" ]; then
       break
     else
       echo "Not a valid user, please try again"
     fi
   done
 
-#  while true; do
-#    read -s -p "Password:" password
-#    if [ something ]; then
-#      break
-#    else
-#      echo "Password incorrect, please try again"
-#    fi
-#  done
-
-  gpg --export "$login" > /dev/null
-
-  if [ $? -ne 0 ]; then
-    echo "Login successful"
-  else
-    echo "Login failed. Please make sure to log into a valid GPG account
-(found in pubkeys directory)"
-    exit
-  fi
+  rm -f gpgsigned.txt gpgtest.txt
+  echo "gpg login test" > gpgtest.txt
+  gpg -u "$login" --output gpgsigned.txt --sign gpgtest.txt
+  rm -f gpgsigned.txt gpgtest.txt
+  echo "Login successful"
 }
 
 if [ "${1}" = "add" ]; then
+  authenticate
   gpg --export "${2}" > pubkeys/"${2}".asc
   exit
 fi
@@ -65,12 +53,14 @@ if [ "${1}" = "modify" ] || [ "${1}" = "change" ]; then
     exit
   fi
 
+  authenticate
   rm pubkeys/"${2}".asc
   gpg --export "${2}" > pubkeys/"${2}".asc
   exit
 fi
 
 if [ "${1}" = "remove" ] || [ "${1}" = "delete" ]; then
+  authenticate
   rm pubkeys/"${2}".asc
   exit
 fi
