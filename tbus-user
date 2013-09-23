@@ -20,6 +20,39 @@ if [ "${1}" = "-h" ] || [ "${1}" = "--help" ] || [ -z "${2}" ]; then
 fi
 
 # TODO: authorise current user before proceeding CRITICAL
+# Or, at the very least, check authorisation while signing the commit. Be careful
+# not to use the newly added key.
+# Best: do both!
+authenticate () {
+  echo "Please sign-in using your GPG account"
+  while true; do
+    read -p "Login:" login
+    if [ "$login.asc" -f pubkeys ]; then
+      break
+    else
+      echo "Not a valid user, please try again"
+    fi
+  done
+
+#  while true; do
+#    read -s -p "Password:" password
+#    if [ something ]; then
+#      break
+#    else
+#      echo "Password incorrect, please try again"
+#    fi
+#  done
+
+  gpg --export "$login" > /dev/null
+
+  if [ $? -ne 0 ]; then
+    echo "Login successful"
+  else
+    echo "Login failed. Please make sure to log into a valid GPG account
+(found in pubkeys directory)"
+    exit
+  fi
+}
 
 if [ "${1}" = "add" ]; then
   gpg --export "${2}" > pubkeys/"${2}".asc
