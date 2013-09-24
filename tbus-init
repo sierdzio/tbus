@@ -60,7 +60,7 @@ else
   DIRMESSAGE=${2}
 fi
 
-if [ "${1}" = "-d" ] || [ "${1}" = "--delete" ]; then
+if [ $DELETE == true ]; then
   if [ -d "$OUTPUT/.git" ] || [ -d "$OUTPUT/templates" ] || [ -d "$OUTPUT/pubkeys" ] \
      || [ -f "$OUTPUT/.tbusconfig" ] || [ -f "$OUTPUT/.gitignore" ]; then
     echo "Removing tbus repository from" $DIRMESSAGE

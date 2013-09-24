@@ -4,3 +4,5 @@
  - move to C++ ;)
  - add tests and automated regression test suite for the whole project
  - port and test on Windows :-(
+ - add .deb and .rpm packages
+ - add configure script
