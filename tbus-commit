@@ -1,11 +1,27 @@
 #!/bin/bash
 # Commit changes made to the working tree of the repository.
-if [ "${1}" = "-h" ] || [ "${1}" = "--help" ]; then
+help () {
   echo "tbus-commit - used to commit changes made to the working tree of the
 
 Committing requires gpg signature of a person listed in pubkeys directory. If
 you want to make unauthorised changes, use git commit instead. Unauthorised
 changes will not be accepted by other peers."
+}
+
+if [ "${1}" = "-h" ] || [ "${1}" = "--help" ]; then
+  help
   exit
 fi
 
+# TODO: what if the user has added a public key manually, circumventing tbus-user?
+# You need to check that!
+LOGIN="${1}"
+if [ -f "pubkeys/$LOGIN.asc" ]; then
+  echo "Invalid login. You need to use one of the accounts present in pubkeys
+directory. Use tbus user -h for more information"
+  exit
+fi
+
+# TODO: find GPG key id for the given public key
+# Use gpg --list-keys --with-colons
+git commit --gpg-sign=blah

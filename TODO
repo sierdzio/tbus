@@ -1,4 +1,5 @@
-# TODO in tbus:
+# TODO in tbus. Those are only general items. Specific details are listed in
+# relevant parts of the code:
  - add bash auto completion
  - consider adding a unified command line parser
  - move to C++ ;)

@@ -22,6 +22,8 @@ fi
 # TODO: Also check authorisation while signing the commit
 # TODO: Export this so that it can be used in other scripts
 # TODO: Make it more intelligent when it comes to paths (use tbus-info or dirname "${0}")
+# TODO: what if the user has added a public key manually, circumventing tbus-user?
+#       You need to check that!
 authenticate () {
   echo "Please sign-in using your GPG account. Please make sure to log into
 a valid GPG account (found in pubkeys directory)"
