@@ -11,7 +11,29 @@ transfers, and greater availability of software, even if "main server"
 is not operational.
 
 tbus combines gpg, git and torrent protocol to make sure that all data is properly
-signed, downloaded without errors.
+signed and downloaded without errors.
+
+If unsure how to use it, wait for the documentation to be developed ;) Or you
+can gather knowledge using --help flag. All tbus commands have some helpful (hopefully)
+output for this flag. So, start with:
+tbus --help
+
+To create a new repository, run tbus-init:
+tbus init --help
+
+To clone an existing one, use tbus-clone or tbus-connect (they are synonyms):
+tbus clone --help
+
+Then you can start adding changes. tbus follows git API pretty closely, so if you
+know git, you should be able to learn pretty fast. tbus works by storing torrent
+files for all data you add. You are responsible for keeping the data somewhere,
+tbus manages torrent files only.
+
+tbus can be run in archive mode: it will not overwrite downloaded data, but put
+it in separate directories based on date/ version of the file. This allows for easy
+creation of content mirrors that are able to serve different peers who want to
+download data that is not necessarily bleeding-edge. Also, quite interestingly,
+this feature is not implemented at all yet :P
 
 WARNING: this project is in very early stages of development. Barely anything works
 at the moment. Feel free to look around (and submit patches! :-)), but don't expect

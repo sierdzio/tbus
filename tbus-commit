@@ -21,7 +21,10 @@ fi
 LOGIN="${1}"
 if [ -f "pubkeys/$LOGIN.asc" ]; then
   echo "Invalid login. You need to use one of the accounts present in pubkeys
-directory. Use tbus user -h for more information"
+directory. Use tbus user -h for more information.
+You are not allowed to commit things if you can't sign it with valid GPG key.
+You can use standard git to create your commit, but it will not be accepted by
+other peers."
   exit
 fi
 
@@ -71,7 +74,10 @@ do
 done
 
 if [ $entryFound == false ]; then
-  echo "Could not find key ID in local keyring. Make sure your GPG setup is correct"
+  echo "Could not find key ID in local keyring. Make sure your GPG setup is correct.
+You are not allowed to commit things if you can't sign it with valid GPG key.
+You can use standard git to create your commit, but it will not be accepted by
+other peers."
   exit
 fi
 
