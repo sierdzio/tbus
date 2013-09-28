@@ -7,3 +7,4 @@
  - port and test on Windows :-(
  - add .deb and .rpm packages
  - add configure script
+ - add debug functionality (some easy to implement flag shared between all commands)

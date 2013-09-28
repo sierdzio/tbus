@@ -68,4 +68,10 @@ if [ "${1}" = "clone" ] || [ "${1}" = "connect" ]; then
   exit
 fi
 
+if [ "${1}" = "commit" ]; then
+  shift
+  tbus-commit "$@"
+  exit
+fi
+
 help
