@@ -6,12 +6,96 @@ if [ "${1}" = "-h" ] || [ "${1}" = "--help" ]; then
 Options:
   -h or --help - display this message
   -t or --template-dir - return the directory where templates are kept
-  -v or --version - return tbus version"
+  -v or --version - return tbus version
+  -c or --check-setup - checks if all tbus dependencies are met, verifies
+    tbus configuration and settings"
   exit
 fi
 
+version="0.0.1"
+
 if [ "${1}" = "-v" ] || [ "${1}" = "--version" ]; then
-  echo "0.0.1"
+  echo "$version"
+  exit
+fi
+
+getVersionString () {
+  # Get string number $2 from data passed in $1
+  index=0
+  for x in ${1}
+  do
+    if [ $index == ${2} ]; then
+      echo "$x"
+      break
+    fi
+  index=$(($index + 1))
+  done
+}
+
+if [ "${1}" = "-c" ] || [ "${1}" = "--check-setup" ]; then
+  echo "Checking system configuration..."
+  gitExists=$(which git)
+  gpgExists=$(which gpg)
+  gpg2Exists=$(which gpg2)
+  torrentExists=$(which transmission-cli)
+  torrentBackend="transmission-cli"
+
+  configCorrect=true
+  statusReport="tbus version "$version"\n"
+
+  # TODO: transform into a function!
+  if [ -z "$gitExists" ]; then
+    statusReport=$statusReport"git has not been found!"
+    configCorrect=false
+  else
+    gitVersion=$(git --version)
+    gitVersion=$(getVersionString "$gitVersion" 2)
+
+    # TODO: parse version numbers, check if git is recent enough (> 1.7.9)
+    statusReport=$statusReport"git version: "$gitVersion
+  fi
+  statusReport=$statusReport"\n"
+
+  if [ -z "$gpgExists" ]; then
+    statusReport=$statusReport"gpg has not been found!"
+  else
+    gpgVersion=$(gpg --version)
+    gpgVersion=$(getVersionString "$gpgVersion" 2)
+    statusReport=$statusReport"gpg version: "$gpgVersion
+  fi
+  statusReport=$statusReport"\n"
+
+  if [ -z "$gpg2Exists" ]; then
+    statusReport=$statusReport"gpg2 has not been found!"
+  else
+    gpg2Version=$(gpg2 --version)
+    gpg2Version=$(getVersionString "$gpg2Version" 2)
+    statusReport=$statusReport"gpg2 version: "$gpg2Version
+  fi
+  statusReport=$statusReport"\n"
+
+  if [ -z "$gpgExists" ] && [ -z "$gpg2Exists" ]; then
+    statusReport=$statusReport"Can't locate any GPG installation\n"
+    configCorrect=false
+  fi
+
+  if [ -z "$torrentExists" ]; then
+    statusReport=$statusReport"torrent backend has not been found!"
+    configCorrect=false
+  else
+    torrentVersion=$(transmission-cli --version)
+    torrentVersion=$(getVersionString "$torrentVersion" 1)
+    statusReport=$statusReport"torrent backend version: ("$torrentBackend") "$torrentVersion
+  fi
+  statusReport=$statusReport"\n\n"
+
+  if [ $configCorrect == true ]; then
+    statusReport=$statusReport"All dependencies are there, enjoy using tbus :-)\n"
+  else
+    statusReport=$statusReport"Some dependencies are missing or not up-to-date\n"
+  fi
+
+  printf "$statusReport"
   exit
 fi
 
