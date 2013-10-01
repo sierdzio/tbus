@@ -52,7 +52,35 @@ if [ "${1}" = "-c" ] || [ "${1}" = "--check-setup" ]; then
     gitVersion=$(getVersionString "$gitVersion" 2)
 
     # TODO: parse version numbers, check if git is recent enough (> 1.7.9)
+    gitVersionArray=$(echo "$gitVersion" | tr "." " ")
+    gitMajor=$(getVersionString "$gitVersionArray" 0)
+    gitMinor=$(getVersionString "$gitVersionArray" 1)
+    gitPatch=$(getVersionString "$gitVersionArray" 2)
+    isOk=false
+
+    if [ $gitMajor == 1 ]; then
+      if (( $gitMinor >= 7 )); then
+        if [ $gitMinor == 7 ]; then
+          if (( $gitPatch >= 9 )); then
+            isOk=true
+          else
+            isOk=false
+          fi
+        else
+          isOk=true
+        fi
+      fi
+    elif (( $gitMajor >= 2 )); then
+      isOk=true
+    else
+      isOk=false
+    fi
+
     statusReport=$statusReport"git version: "$gitVersion
+
+    if [ $isOk == true ]; then
+      statusReport=$statusReport", with commit signing support"
+    fi
   fi
   statusReport=$statusReport"\n"
 
