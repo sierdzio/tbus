@@ -17,3 +17,17 @@ if [ "${1}" = "-h" ] || [ "${1}" = "--help" ]; then
   help
   exit
 fi
+
+# TODO: oh my, that's a lot of work :D
+# 1. Check if the daemon is already running. If not, start it and wait
+# for the swarm to populate.
+# 2. Select some peers at random (first try. Implement more clever logic later.
+# for example, peers could send 'update ping' signals with their repo timestamp
+# to ease the process).
+# 3. Download git repository updates from those peers (how?).
+# 4. Verify commit signatures for those new remotes.
+# 5. For verified remotes, check if the update info matches (is the same). This
+# could be quite error-prone, think of some better algorithm.
+# 6. Select one good remote, merge it.
+# 7. Clean up - remove remotes, git prune, etc.
+# 8. Display status information to the user.

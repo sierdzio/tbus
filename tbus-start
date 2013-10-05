@@ -16,3 +16,5 @@ if [ "${1}" = "-h" ] || [ "${1}" = "--help" ]; then
   help
   exit
 fi
+
+# TODO: run transmission-daemon. Think of the API
