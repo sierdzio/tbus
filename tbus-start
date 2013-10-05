@@ -1,0 +1,18 @@
+#!/bin/bash
+# tbus-start script
+help () {
+  echo "tbus-start - starts the tbus daemon, connects to root torrent peer swarm
+
+  tbus-start runs the tbus background daemon (service), which can greatly
+  speed up update, upgrade and install operations - because the peer swarm
+  discovery is already handled by tbus-start.
+
+  The daemon also enables sharing data with other peers (torrent content is
+  uploaded to others in need).
+"
+}
+
+if [ "${1}" = "-h" ] || [ "${1}" = "--help" ]; then
+  help
+  exit
+fi

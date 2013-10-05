@@ -1,0 +1,19 @@
+#!/bin/bash
+# tbus-update script
+help () {
+  echo "tbus-update - gathers and verifies update information from torrent swarm
+
+  tbus-update connects to the peer swarm of the root torrent file and downloads
+  update information from several peers. That data is then verified using GPG,
+  and if tbus decides that the update is legitimate, the local repository is
+  updated. Otherwise, all changes are discarded.
+
+  Once the update is complete, you can run tbus-upgrade to install all updates,
+  or tbus-install to select new packages to install.
+"
+}
+
+if [ "${1}" = "-h" ] || [ "${1}" = "--help" ]; then
+  help
+  exit
+fi

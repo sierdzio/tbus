@@ -20,6 +20,14 @@ Commands:
  - commit - commit staged changes
  - user - allows to manage authorised users
  - clone or connect - clones and existing repository
+ // Not yet ready:
+ - update - gathers and verifies update information from torrent swarm
+ - upgrade - applies updates to all already downloaded packages
+ - select or install - can download new packages
+ - unselect or remove - removes downloaded packages
+ - start - starts the torrent daemon (runs in the background, maintaining
+   swarm connectivity, downloading and uploading data). This command is run
+   automatically by tbus-update and tbus-upgrade, too
 "
 }
 
@@ -79,6 +87,18 @@ fi
 if [ "${1}" = "commit" ]; then
   shift
   tbus-commit "$@"
+  exit
+fi
+
+if [ "${1}" = "update" ]; then
+  shift
+  tbus-update "$@"
+  exit
+fi
+
+if [ "${1}" = "start" ]; then
+  shift
+  tbus-start "$@"
   exit
 fi
 

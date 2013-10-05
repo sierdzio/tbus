@@ -124,6 +124,10 @@ if [ "${1}" = "-c" ] || [ "${1}" = "--check-setup" ]; then
   fi
 
   printf "$statusReport"
+
+  # TODO: add more checks: whether template dir is there, all tbus methods are
+  #       there and - maybe - run all the tests
+
   exit
 fi
 
