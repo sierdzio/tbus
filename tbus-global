@@ -1,0 +1,5 @@
+#!/bin/bash
+# tbus-global this is an internal script used by other tbus commands. Tbus users
+# do not need to access it.
+
+rootFileName=.root.torrent

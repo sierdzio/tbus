@@ -9,6 +9,11 @@ help () {
 
   The daemon also enables sharing data with other peers (torrent content is
   uploaded to others in need).
+
+  Options:
+  -i or --is-running - returns true if the daemon is already running, otherwise
+    returns false (this is pretty much obsolete, though, since you can run
+    the daemon again and it will still work OK. It won't start multiple instances)
 "
 }
 
@@ -17,4 +22,8 @@ if [ "${1}" = "-h" ] || [ "${1}" = "--help" ]; then
   exit
 fi
 
+. tbus-global
+
 # TODO: run transmission-daemon. Think of the API
+# TODO: warning, you need to add a controll for the upload speed
+transmission-remote --pex --lds --no-trash-torrent --uplimit 50 --add $rootFileName

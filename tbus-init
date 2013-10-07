@@ -18,6 +18,7 @@ Example invokation:
   exit
 fi
 
+. tbus-global
 # Parse command line arguments
 GPGIDS=()
 TRACKERS=()
@@ -102,7 +103,7 @@ for item in ${TRACKERS[*]}
 do
   TRACKERARGS=$TRACKERARGS" -t $item"
 done
-transmission-create -c 'root torrent file for tbus repository named '$NAME -o .root.torrent$TRACKERARGS .seed
+transmission-create -c 'root torrent file for tbus repository named '$NAME -o $rootFileName$TRACKERARGS .seed
 
 # Add all GPG IDs
 for item in ${GPGIDS[*]}
