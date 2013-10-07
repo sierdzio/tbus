@@ -31,3 +31,5 @@ fi
 # 6. Select one good remote, merge it.
 # 7. Clean up - remove remotes, git prune, etc.
 # 8. Display status information to the user.
+
+tbus-start
