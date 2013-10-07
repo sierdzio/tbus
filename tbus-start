@@ -23,7 +23,7 @@ if [ "${1}" = "-h" ] || [ "${1}" = "--help" ]; then
   exit
 fi
 
-uploadLimit="50"
+uploadLimit=$defaultUploadLimit
 
 if [ "${1}" = "-u" ] || [ "${1}" = "--upload-speed" ]; then
   if [ -z "${2}" ]; then

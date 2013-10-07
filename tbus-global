@@ -3,3 +3,4 @@
 # do not need to access it.
 
 rootFileName=.root.torrent
+defaultUploadLimit=50
