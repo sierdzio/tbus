@@ -66,6 +66,12 @@ if [ "${1}" = "info" ]; then
   exit
 fi
 
+if [ "${1}" = "config" ]; then
+  shift
+  tbus-config "$@"
+  exit
+fi
+
 if [ "${1}" = "add" ]; then
   shift
   tbus-add "$@"

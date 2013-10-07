@@ -1,5 +1,7 @@
 #!/bin/bash
 # tbus-start script
+. tbus-global
+
 help () {
   echo "tbus-start - starts the tbus daemon, connects to root torrent peer swarm
 
@@ -11,9 +13,8 @@ help () {
   uploaded to others in need).
 
   Options:
-  -i or --is-running - returns true if the daemon is already running, otherwise
-    returns false (this is pretty much obsolete, though, since you can run
-    the daemon again and it will still work OK. It won't start multiple instances)
+  -u or --upload-speed - limit the upload speed to the number given as the next
+    argument. This can also be set up using tbus config file
 "
 }
 
@@ -22,8 +23,14 @@ if [ "${1}" = "-h" ] || [ "${1}" = "--help" ]; then
   exit
 fi
 
-. tbus-global
+uploadLimit="50"
+
+if [ "${1}" = "-u" ] || [ "${1}" = "--upload-speed" ]; then
+  if [ -z "${2}" ]; then
+    # upload speed not specified, try reading from tbus-config
+  fi
+fi
 
 # TODO: run transmission-daemon. Think of the API
 # TODO: warning, you need to add a controll for the upload speed
-transmission-remote --pex --lds --no-trash-torrent --uplimit 50 --add $rootFileName
+transmission-remote --pex --lds --no-trash-torrent --uplimit $uploadLimit --add $rootFileName

@@ -1,0 +1,12 @@
+#!/bin/bash
+# tbus-config is used to read and modify the global/ local configuration of tbus.
+help () {
+  echo "tbus-config is used to read and modify the global/ local configuration of tbus
+
+To get general information about tbus, use tbus info."
+}
+
+if [ "${1}" = "-h" ] || [ "${1}" = "--help" ]; then
+  help
+  exit
+fi
