@@ -27,10 +27,12 @@ uploadLimit="50"
 
 if [ "${1}" = "-u" ] || [ "${1}" = "--upload-speed" ]; then
   if [ -z "${2}" ]; then
-    # upload speed not specified, try reading from tbus-config
+    uploadLimit=$(tbus-config --upload-limit)
   fi
 fi
 
 # TODO: run transmission-daemon. Think of the API
 # TODO: warning, you need to add a controll for the upload speed
+# TODO: implement support for many separate tbus repos (need to track multiple
+#  root torrent files)
 transmission-remote --pex --lds --no-trash-torrent --uplimit $uploadLimit --add $rootFileName
