@@ -8,3 +8,5 @@
  - add .deb and .rpm packages
  - add configure script
  - add debug functionality (some easy to implement flag shared between all commands)
+ - decide between transmission-cli and transmission-daemon (for multiple instance
+   stuff)

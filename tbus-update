@@ -32,4 +32,17 @@ fi
 # 7. Clean up - remove remotes, git prune, etc.
 # 8. Display status information to the user.
 
-tbus-start
+# Run git-daemon and transmission-daemon
+#tbus-start
+
+# TODO: wait a bit, so that the swarm does populate
+
+# TODO: get root torrent hash
+rootTorrentHash=$(transmission-show .root.torrent | grep "Hash:")
+rootTorrentHash=${rootTorrentHash#"  Hash: "}
+echo "$rootTorrentHash"
+
+# Get peer list from the server
+# TODO: make sure we are connecting to localhost
+peerListRaw=$(transmission-remote --info-peers --torrent "$rootTorrentHash")
+echo "$peerListRaw"
