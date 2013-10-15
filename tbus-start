@@ -1,5 +1,6 @@
 #!/bin/bash
 # tbus-start script
+
 . tbus-global
 
 help () {
@@ -40,4 +41,4 @@ transmission-remote --pex --lds --no-trash-torrent --uplimit $uploadLimit --add 
 
 # TODO: fix paths to point to the tbus repository!
 # TODO: make sure this is read only! See http://git-scm.com/book/ch4-9.html
-git daemon --user=git --group=git --reuseaddr --base-path=/opt/git/ /opt/git/
+git daemon --user=git --group=git --reuseaddr --base-path=. .

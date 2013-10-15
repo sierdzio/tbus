@@ -2,5 +2,18 @@
 # tbus-global this is an internal script used by other tbus commands. Tbus users
 # do not need to access it.
 
+isDebug=false
+
+if [[ "$*" == *--debug* ]]; then
+  isDebug=true
+fi
+
 rootFileName=.root.torrent
 defaultUploadLimit=50
+
+# Print debug info if in debug mode
+debug () {
+  if [ $isDebug == true ]; then
+    echo "${1}"
+  fi
+}

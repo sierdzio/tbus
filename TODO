@@ -10,3 +10,4 @@
  - add debug functionality (some easy to implement flag shared between all commands)
  - decide between transmission-cli and transmission-daemon (for multiple instance
    stuff)
+ - make sure tbus can work with multiple repositories (esp. check the git daemon)

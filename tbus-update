@@ -1,5 +1,8 @@
 #!/bin/bash
 # tbus-update script
+
+. tbus-global
+
 help () {
   echo "tbus-update - gathers and verifies update information from torrent swarm
 
@@ -40,9 +43,9 @@ fi
 # TODO: get root torrent hash
 rootTorrentHash=$(transmission-show .root.torrent | grep "Hash:")
 rootTorrentHash=${rootTorrentHash#"  Hash: "}
-echo "$rootTorrentHash"
+debug "$rootTorrentHash"
 
 # Get peer list from the server
 # TODO: make sure we are connecting to localhost
-peerListRaw=$(transmission-remote --info-peers --torrent "$rootTorrentHash")
-echo "$peerListRaw"
+#peerListRaw=$(transmission-remote --info-peers --torrent "$rootTorrentHash")
+#debug "$peerListRaw"
