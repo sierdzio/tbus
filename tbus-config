@@ -1,5 +1,8 @@
 #!/bin/bash
 # tbus-config is used to read and modify the global/ local configuration of tbus.
+
+. tbus-global
+
 help () {
   echo "tbus-config is used to read and modify the global/ local configuration
 of tbus.

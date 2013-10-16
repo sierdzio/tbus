@@ -1,5 +1,8 @@
 #!/bin/bash
 # tbus-info can be used to gather information about tbus installation.
+
+. tbus-global
+
 if [ "${1}" = "-h" ] || [ "${1}" = "--help" ]; then
   echo "tbus-info [option]
 

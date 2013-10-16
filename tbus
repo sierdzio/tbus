@@ -1,10 +1,17 @@
 #!/bin/bash
 # Main tbus script
+
+. tbus-global
+
 help () {
   echo "tbus - torrent-based update system
 Copyright (c) 2013 by Tomasz Siekierda, sierdzio@gmail.com
 
 This is free software, for more info see the LICENSE file, or run tbus -l
+
+Global options (available in all tbus subcommands):
+ --debug - will print out debug information, additional log messages etc.
+   There is a plan to include various debug levels, but this is not yet ready.
 
 Options:
  -h or --help - display this message
@@ -42,14 +49,14 @@ if [ "${1}" = "-v" ] || [ "${1}" = "--version" ]; then
 fi
 
 if [ "${1}" = "-l" ] || [ "${1}" = "--license" ]; then
-  # Use path detection from tbus-info
+  # TODO: Use path detection from tbus-info
   cat $(dirname $(which tbus))/LICENSE
   echo ""
   exit
 fi
 
 if [ "${1}" = "-r" ] || [ "${1}" = "--readme" ]; then
-  # Use path detection from tbus-info
+  # TODO: Use path detection from tbus-info
   less $(dirname $(which tbus))/README
   exit
 fi

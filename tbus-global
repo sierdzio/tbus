@@ -4,6 +4,7 @@
 
 isDebug=false
 
+# TODO: if possible, remove debug from args variable
 if [[ "$*" == *--debug* ]]; then
   isDebug=true
 fi

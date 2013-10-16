@@ -1,6 +1,9 @@
 #!/bin/bash
 # tbus-add can be used to create .torrent files from given data.
 # It can update old files or add completely new ones.
+
+. tbus-global
+
 if [ "${1}" = "-h" ] || [ "${1}" = "--help" ]; then
   echo "tbus-add [option] files and directories
 
@@ -66,8 +69,7 @@ if [ ${#INPUT[*]} == 0 ]; then
   exit
 fi
 
-# Uncomment to display parser output data
-#testParsing
+ debug $(testParsing)
 
 addTorrent ()
 {
@@ -102,7 +104,7 @@ addTorrent ()
 
   arguments=$arguments" -o "$output" "$input
 
-  #echo "transmission-create"$arguments
+  debug "transmission-create"$arguments
   transmission-create$arguments
 }
 

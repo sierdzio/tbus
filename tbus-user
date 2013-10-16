@@ -1,5 +1,8 @@
 #!/bin/bash
 # tbus-user can be used to manage authorised users (committers).
+
+. tbus-global
+
 help () {
   echo "tbus-user
 tbus-user can be used to manage authorised users (committers). You will need to

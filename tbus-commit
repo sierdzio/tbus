@@ -1,5 +1,8 @@
 #!/bin/bash
 # Commit changes made to the working tree of the repository.
+
+. tbus-global
+
 help () {
   echo "tbus-commit - used to commit changes made to the working tree of the repository.
 
@@ -29,7 +32,7 @@ other peers."
 fi
 
 # Entries are separated using space and colon to keep empty parts
-#echo $(gpg --list-secret-keys --with-colons)
+debug "$(gpg --list-secret-keys --with-colons)"
 # TODO: clearly mark newline characters to be sure the algorithm does work
 
 intermediate=:$(gpg --list-secret-keys --with-colons |  tr '[\n]' '[:]')
@@ -44,7 +47,7 @@ keyID=""
 for x in $array
 do
   element=${x:1}
-  echo "$index": "$element"
+  debug "$index: $element"
 
   if [ $index == 15 ]; then
     index=0
@@ -83,4 +86,5 @@ fi
 
 shift
 # TODO: make sure the signing will work (is config correct?)
-echo "git commit --gpg-sign=$keyID" "$@"
+# TODO: enable this command!
+debug "git commit --gpg-sign=$keyID" "$@"
