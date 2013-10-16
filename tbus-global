@@ -11,6 +11,7 @@ fi
 
 rootFileName=.root.torrent
 defaultUploadLimit=50
+torrentControlAddress=127.0.0.1:9091
 
 # Print debug info if in debug mode
 debug () {
