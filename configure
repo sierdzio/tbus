@@ -10,7 +10,7 @@ help () {
   echo "Usage: configure [--local | --global]
 
 Configure script prepares tbus for daily usage by installing it to home
-or root binary paths. Configure can be run multiple times (for example, after
+or root search paths. Configure can be run multiple times (for example, when
 you update tbus version to a newer one), it will overwrite any existing files.
 
 Options:
@@ -35,8 +35,8 @@ if [ "${1}" = "-h" ] || [ "${1}" = "--help" ]; then
 fi
 
 if [ "${1}" = "-l" ] || [ "${1}" = "--local" ]; then
-  cp -f src/* $HOME/bin/
-  cp -f templates $HOME/.tbus/
+  cp -fv src/* $HOME/bin/
+  cp -fv templates $HOME/.tbus/
 
   if [ -z $(cat $HOME/.profile | grep "\$HOME/bin") ]; then
     echo "\n\nexport PATH=\$HOME/bin:\$PATH" >> .profile
@@ -45,9 +45,9 @@ if [ "${1}" = "-l" ] || [ "${1}" = "--local" ]; then
 fi
 
 if [ "${1}" = "-g" ] || [ "${1}" = "--global" ]; then
-  sudo cp -f src/* /usr/bin/
+  sudo cp -fv src/* /usr/bin/
   # TODO: check if this path is acceptable
-  sudo cp -f templates/ /user/share/tbus/
+  sudo cp -fv templates/ /user/share/tbus/
 
   exit
 fi
