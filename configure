@@ -7,20 +7,38 @@
 # Use ./configure --help to get more info (or look at the code!)
 
 help () {
-  echo "Usage: configure [--local] | [--global]
+  echo "Usage: configure [--local | --global]
 
 Configure script prepares tbus for daily usage by installing it to home
-or root binary paths.
+or root binary paths. Configure can be run multiple times (for example, after
+you update tbus version to a newer one), it will overwrite any existing files.
 
 Options:
   -l or --local - installs tbus for current user (executables are put in
     $HOME/bin, various other tbus files in $HOME/.tbus). This also adds
     $HOME/bin to $PATH in bash .profile (if not present already)
   -g or --global - installs tbus for all users, putting binaries to /usr/bin
+
+For now, the default is to install tbus locally. When tbus is ready for
+production, it will switch to global as the default.
+
+WARNING: you don't need to run make or make install after running configure. As
+  currently tbus does not contain any compilable source code, there is no need
+  for it to use 'make'.
 "
 }
 
 if [ "${1}" = "-h" ] || [ "${1}" = "--help" ]; then
+  help
+  exit
+fi
+
+if [ "${1}" = "-l" ] || [ "${1}" = "--local" ]; then
+  help
+  exit
+fi
+
+if [ "${1}" = "-g" ] || [ "${1}" = "--global" ]; then
   help
   exit
 fi
