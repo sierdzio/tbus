@@ -50,3 +50,8 @@ debug "$rootTorrentHash"
 # TODO: make sure we are connecting to localhost
 peerListRaw=$(transmission-remote "$torrentControlAddress" --info-peers --torrent "$rootTorrentHash")
 debug "$peerListRaw"
+
+# TODO: sanitize the peer list
+
+# TODO: run through the list, select several peers according to some algorithm
+# (can be random), connect to their git repos, verify them, then update

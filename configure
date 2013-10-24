@@ -1,0 +1,26 @@
+#!/bin/sh
+# Usage: configure [flags]
+#
+# Configure script prepares tbus for daily usage by installing it to home
+# or root binary paths.
+#
+# Use ./configure --help to get more info (or look at the code!)
+
+help () {
+  echo "Usage: configure [--local] | [--global]
+
+Configure script prepares tbus for daily usage by installing it to home
+or root binary paths.
+
+Options:
+  -l or --local - installs tbus for current user (executables are put in
+    $HOME/bin, various other tbus files in $HOME/.tbus). This also adds
+    $HOME/bin to $PATH in bash .profile (if not present already)
+  -g or --global - installs tbus for all users, putting binaries to /usr/bin
+"
+}
+
+if [ "${1}" = "-h" ] || [ "${1}" = "--help" ]; then
+  help
+  exit
+fi
