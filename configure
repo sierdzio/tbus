@@ -17,7 +17,8 @@ Options:
   -l or --local - installs tbus for current user (executables are put in
     $HOME/bin, various other tbus files in $HOME/.tbus). This also adds
     $HOME/bin to $PATH in bash .profile (if not present already)
-  -g or --global - installs tbus for all users, putting binaries to /usr/bin
+  -g or --global - installs tbus for all users, putting binaries to /usr/bin.
+    You need admin privileges to do it (if not present, tbus will ask for them)
 
 For now, the default is to install tbus locally. When tbus is ready for
 production, it will switch to global as the default.
@@ -34,11 +35,19 @@ if [ "${1}" = "-h" ] || [ "${1}" = "--help" ]; then
 fi
 
 if [ "${1}" = "-l" ] || [ "${1}" = "--local" ]; then
-  help
+  cp -f src/* $HOME/bin/
+  cp -f templates $HOME/.tbus/
+
+  if [ -z $(cat $HOME/.profile | grep "\$HOME/bin") ]; then
+    echo "\n\nexport PATH=\$HOME/bin:\$PATH" >> .profile
+  fi
   exit
 fi
 
 if [ "${1}" = "-g" ] || [ "${1}" = "--global" ]; then
-  help
+  sudo cp -f src/* /usr/bin/
+  # TODO: check if this path is acceptable
+  sudo cp -f templates/ /user/share/tbus/
+
   exit
 fi
