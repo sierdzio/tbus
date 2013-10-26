@@ -11,8 +11,11 @@ fi
 
 rootFileName=.root.torrent
 defaultUploadLimit=50
-torrentControlAddress=localhost
-#127.0.0.1:9091
+# torrentControlAddress=localhost
+# 127.0.0.1:9091
+tbusDirectory=$HOME/.tbus
+downloadDirectory=$tbusDirectory/download-temp
+transmissionAuth=transmission:transmission
 
 # Print debug info if in debug mode
 debug () {

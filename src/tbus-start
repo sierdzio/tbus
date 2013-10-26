@@ -37,13 +37,23 @@ fi
 # TODO: implement support for many separate tbus repos (need to track multiple
 #  root torrent files)
 # TODO: make sure to point at least to the root torrent file!
-#transmission-daemon --portmap --dht -C --no-auth
-transmission-cli --encryption-preferred --portmap --download-dir $HOME/temp/tbus .root.torrent
-#.tbus/data/
-transmission-remote "$torrentControlAddress" --pex -y --no-trash-torrent \
---uplimit $uploadLimit
-#--add $rootFileName --add .root.torrent
+debug "Starting the torrent daemon"
+#transmission-daemon -C --portmap --dht --no-auth --encryption-preferred --no-incomplete-dir --log-file $tbusDirectory/transmission-daemon.log --download-dir $downloadDirectory
+
+#transmission-cli --encryption-preferred --portmap --download-dir $downloadDirectory .root.torrent
+
+debug "Adding the root torrent and setting things up"
+# "$torrentControlAddress"
+transmission-remote --auth $transmissionAuth --pex -y --no-trash-torrent --uplimit $uploadLimit --add $rootFileName --portmap --dht --no-auth --encryption-preferred --no-incomplete-dir --log-file $tbusDirectory/transmission-daemon.log --download-dir $downloadDirectory
+
+debug "Waiting for peer swarm to populate"
+sleep 4s
+
+debug "List torrents:"
+debug $(transmission-remote --auth $transmissionAuth -l)
 
 # TODO: fix paths to point to the tbus repository!
 # TODO: make sure this is read only! See http://git-scm.com/book/ch4-9.html
-git daemon --user=git --group=git --reuseaddr --base-path=. .
+# --user=git --group=git
+#debug "Starting the git daemon"
+#git daemon --reuseaddr --base-path=.

@@ -37,7 +37,7 @@ fi
 
 # Run git-daemon and transmission-daemon
 debug "Starting the tbus daemon"
-tbus-start
+tbus-start --debug
 
 # TODO: wait a bit, so that the swarm does populate
 debug "Waiting for peer swarm to populate"
@@ -47,12 +47,12 @@ sleep 4s
 debug "Getting the hash of the root torrent file: "
 rootTorrentHash=$(transmission-show .root.torrent | grep "Hash:")
 rootTorrentHash=${rootTorrentHash#"  Hash: "}
-debug "\t$rootTorrentHash"
+debug "$rootTorrentHash"
 
 # Get peer list from the server
 # TODO: make sure we are connecting to localhost
 debug "Parse the peer list"
-peerListRaw=$(transmission-remote "$torrentControlAddress" --info-peers --torrent "$rootTorrentHash")
+peerListRaw=$(transmission-remote --torrent $rootTorrentHash --auth $transmissionAuth --info-peers)
 debug "$peerListRaw"
 
 # TODO: sanitize the peer list

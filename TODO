@@ -10,6 +10,9 @@
  - decide between transmission-cli and transmission-daemon (for multiple instance
    stuff)
  - make sure tbus can work with multiple repositories (esp. check the git daemon)
+ - make .root.torrent also contain the initial commit of data (so that we can
+   connect to tbus repos using magnet links and torrent files, apart from
+   git clones)
 
  Done:
  - add debug functionality: see --debug flag
