@@ -41,7 +41,7 @@ tbus-start $debugFlag
 
 # TODO: wait a bit, so that the swarm does populate
 debug "Waiting for peer swarm to populate"
-sleep 4s
+sleep 8s
 
 # TODO: get root torrent hash
 debug "Getting the hash of the root torrent file: "
@@ -53,9 +53,33 @@ debug "$rootTorrentHash"
 # TODO: make sure we are connecting to localhost
 debug "Parse the peer list"
 peerListRaw=$(transmission-remote --torrent $rootTorrentHash --auth $transmissionAuth --info-peers)
-debug "$peerListRaw"
+# debug "$peerListRaw"
 
 # TODO: sanitize the peer list
+input=$(echo "$peerListRaw" |  tr '[\n]' '[;]')
+input=${input//;/ ; }
+
+line=0
+column=0
+for x in $input; do
+  #echo "Line: "$line", column: "$column", data: "$x
+  if [ $line != 0 ]; then
+    if [ $column == 0 ]; then
+      debug $line": "$x
+      # TODO: add peers to an array
+    fi
+
+    if [ $x == ";" ]; then
+      column=0
+    else
+      column=$(($column + 1))
+    fi
+  fi
+
+  if [ $x == ";" ]; then
+    line=$(($line + 1))
+  fi
+done
 
 # TODO: run through the list, select several peers according to some algorithm
 # (can be random), connect to their git repos, verify them, then update

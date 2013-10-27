@@ -32,7 +32,6 @@ if [ "${1}" = "-u" ] || [ "${1}" = "--upload-speed" ]; then
   fi
 fi
 
-# TODO: run transmission-daemon. Think of the API
 # TODO: warning, you need to add a controll for the upload speed
 # TODO: implement support for many separate tbus repos (need to track multiple
 #  root torrent files)
@@ -43,14 +42,21 @@ debug "Starting the torrent daemon"
 #transmission-cli --encryption-preferred --portmap --download-dir $downloadDirectory .root.torrent
 
 debug "Adding the root torrent and setting things up"
-# "$torrentControlAddress"
-transmission-remote --auth $transmissionAuth --pex -y --no-trash-torrent --uplimit $uploadLimit --add $rootFileName --portmap --dht --no-auth --encryption-preferred --no-incomplete-dir --log-file $tbusDirectory/transmission-daemon.log --download-dir $downloadDirectory
+# $PWD/$rootFileName
+transmission-remote --auth $transmissionAuth --torrent all --start-paused --add $rootFileName >> $tbusDirectory/transmission-daemon.log
+
+debug "Setting things up"
+transmission-remote --auth $transmissionAuth --torrent all --pex -y --no-trash-torrent --uplimit $uploadLimit --portmap --dht --encryption-preferred --no-incomplete-dir --download-dir $downloadDirectory --no-incomplete-dir >> $tbusDirectory/transmission-daemon.log
+# --log-file $tbusDirectory/transmission-daemon.log
+
+debug "Starting all torrents"
+transmission-remote --auth $transmissionAuth --torrent all --start >> $tbusDirectory/transmission-daemon.log
 
 debug "Waiting for peer swarm to populate"
 sleep 4s
 
-debug "List torrents:"
-debug $(transmission-remote --auth $transmissionAuth -l)
+#debug "List torrents:"
+#debug $(transmission-remote --auth $transmissionAuth -l)
 
 # TODO: fix paths to point to the tbus repository!
 # TODO: make sure this is read only! See http://git-scm.com/book/ch4-9.html
