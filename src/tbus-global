@@ -3,10 +3,12 @@
 # do not need to access it.
 
 isDebug=false
+debugFlag=""
 
 # TODO: if possible, remove debug from args variable
 if [[ "$*" == *--debug* ]]; then
   isDebug=true
+  debugFlag="--debug"
 fi
 
 rootFileName=.root.torrent

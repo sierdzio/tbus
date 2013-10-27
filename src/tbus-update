@@ -37,7 +37,7 @@ fi
 
 # Run git-daemon and transmission-daemon
 debug "Starting the tbus daemon"
-tbus-start --debug
+tbus-start $debugFlag
 
 # TODO: wait a bit, so that the swarm does populate
 debug "Waiting for peer swarm to populate"
