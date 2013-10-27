@@ -60,6 +60,7 @@ sleep 4s
 
 # TODO: fix paths to point to the tbus repository!
 # TODO: make sure this is read only! See http://git-scm.com/book/ch4-9.html
+# TODO: make sure you are running only one instance!
 # --user=git --group=git
-#debug "Starting the git daemon"
-#git daemon --reuseaddr --base-path=.
+debug "Starting the git daemon"
+git daemon --reuseaddr --base-path=$PWD $PWD >> $tbusDirectory/git-daemon.log &

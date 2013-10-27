@@ -55,7 +55,6 @@ debug "Parse the peer list"
 peerListRaw=$(transmission-remote --torrent $rootTorrentHash --auth $transmissionAuth --info-peers)
 # debug "$peerListRaw"
 
-# TODO: sanitize the peer list
 input=$(echo "$peerListRaw" |  tr '[\n]' '[;]')
 input=${input//;/ ; }
 
