@@ -63,4 +63,4 @@ sleep 4s
 # TODO: make sure you are running only one instance!
 # --user=git --group=git
 debug "Starting the git daemon"
-git daemon --reuseaddr --base-path=$PWD $PWD >> $tbusDirectory/git-daemon.log &
+git daemon --detach --reuseaddr --base-path=$PWD $PWD >> $tbusDirectory/git-daemon.log

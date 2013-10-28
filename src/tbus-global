@@ -11,6 +11,7 @@ if [[ "$*" == *--debug* ]]; then
   debugFlag="--debug"
 fi
 
+version="0.0.1"
 rootFileName=.root.torrent
 defaultUploadLimit=50
 # torrentControlAddress=localhost

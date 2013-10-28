@@ -11,11 +11,29 @@ Options:
   -t or --template-dir - return the directory where templates are kept
   -v or --version - return tbus version
   -c or --check-setup - checks if all tbus dependencies are met, verifies
-    tbus configuration and settings"
+    tbus configuration and settings
+  -d or --daemon - prints out information about all tbus daemons currently in
+    use
+  -r or --repository or --repo - prints out information about current tbus
+    repository"
   exit
 fi
 
-version="0.0.1"
+if [ "${1}" = "-d" ] || [ "${1}" = "--daemon" ]; then
+  transmission-remote --auth $transmissionAuth -tall -l
+  #git daemon
+  exit
+fi
+
+if [ "${1}" = "-r" ] || [ "${1}" = "--repository" ] || [ "${1}" = "--repo" ]; then
+  echo "Git status:"
+  git status
+  echo ""
+  # TODO: make it show only information about current repo's torrents
+  echo "Torrent status:"
+  transmission-remote --auth $transmissionAuth -tall -l
+  exit
+fi
 
 if [ "${1}" = "-v" ] || [ "${1}" = "--version" ]; then
   echo "$version"

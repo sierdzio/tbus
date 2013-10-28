@@ -22,7 +22,7 @@ Options:
 Commands:
  - init - initializes a new repository
  - info - provides general information about tbus installation,
-   setup and repository
+   setup and current repository
  - add - adds data to an existing repository
  - commit - commit staged changes
  - user - allows to manage authorised users
