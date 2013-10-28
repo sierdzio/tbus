@@ -41,7 +41,7 @@ fi
 if [ "${1}" = "-g" ] || [ "${1}" = "--global" ]; then
   sudo cp -fv src/* /usr/bin/
   # TODO: check if this path is acceptable
-  sudo cp -fv templates/ /user/share/tbus/
+  sudo cp -fvr templates/ /user/share/tbus/
 
   exit
 fi
@@ -53,17 +53,17 @@ if [ "${1}" = "--uninstall" ]; then
 
   for x in $binaries; do
     echo "Deleting: "$HOME/bin/$x
-    rm $HOME/bin/$x
+    rm -fv $HOME/bin/$x
   done
 
   echo "Deleting all local tbus settings and temporary data"
-  rm -rf $HOME/.tbus
+  rm -rfvd $HOME/.tbus
   exit
 fi
 
 if [ "${1}" = "-l" ] || [ "${1}" = "--local" ]; then
   cp -fv src/* $HOME/bin/
-  cp -fv templates $HOME/.tbus/
+  cp -fvr templates $HOME/.tbus/
 
   if [ -z $(cat $HOME/.profile | grep "\$HOME/bin") ]; then
     echo "\n\nexport PATH=\$HOME/bin:\$PATH" >> .profile
