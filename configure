@@ -19,9 +19,13 @@ Options:
     $HOME/bin to $PATH in bash .profile (if not present already)
   -g or --global - installs tbus for all users, putting binaries to /usr/bin.
     You need admin privileges to do it (if not present, tbus will ask for them)
+  --uninstall - (not implemented yet) removes your current tbus installation.
+    Warning: this will tbus completely, including your global and local
+    configuration, binaries and (TBD) all downloaded data. Some more delicate
+    adjustments are planned here (ability to choose what should be deleted,
+    for a start!)
 
-For now, the default is to install tbus locally. When tbus is ready for
-production, it will switch to global as the default.
+For now, local installation is recommended - global one has not been tested!
 
 WARNING: you don't need to run make or make install after running configure. As
   currently tbus does not contain any compilable source code, there is no need
@@ -31,6 +35,29 @@ WARNING: you don't need to run make or make install after running configure. As
 
 if [ "${1}" = "-h" ] || [ "${1}" = "--help" ]; then
   help
+  exit
+fi
+
+if [ "${1}" = "-g" ] || [ "${1}" = "--global" ]; then
+  sudo cp -fv src/* /usr/bin/
+  # TODO: check if this path is acceptable
+  sudo cp -fv templates/ /user/share/tbus/
+
+  exit
+fi
+
+if [ "${1}" = "--uninstall" ]; then
+  echo "Performing tbus uninstallation for current user (local uninstallation)"
+  echo "Removing tbus binaries and scripts"
+  binaries=$(ls src)
+
+  for x in $binaries; do
+    echo "Deleting: "$HOME/bin/$x
+    rm $HOME/bin/$x
+  done
+
+  echo "Deleting all local tbus settings and temporary data"
+  rm -rf $HOME/.tbus
   exit
 fi
 
@@ -44,10 +71,5 @@ if [ "${1}" = "-l" ] || [ "${1}" = "--local" ]; then
   exit
 fi
 
-if [ "${1}" = "-g" ] || [ "${1}" = "--global" ]; then
-  sudo cp -fv src/* /usr/bin/
-  # TODO: check if this path is acceptable
-  sudo cp -fv templates/ /user/share/tbus/
-
-  exit
-fi
+help
+exit
