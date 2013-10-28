@@ -65,7 +65,9 @@ if [ "${1}" = "-l" ] || [ "${1}" = "--local" ]; then
   cp -fv src/* $HOME/bin/
   cp -fvr templates $HOME/.tbus/
 
-  if [ -z $(cat $HOME/.profile | grep "\$HOME/bin") ]; then
+  homeBin=$(cat $HOME/.profile | grep "\$HOME/bin")
+  absoluteBin=$(cat $HOME/.profile | grep "$HOME/bin")
+  if [ -z "$homeBin" ] && [ -z "$absoluteBin" ]; then
     echo "\n\nexport PATH=\$HOME/bin:\$PATH" >> .profile
   fi
   exit
