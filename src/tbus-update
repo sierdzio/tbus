@@ -60,12 +60,14 @@ input=${input//;/ ; }
 
 line=0
 column=0
+peerList[0]=""
 for x in $input; do
   #echo "Line: "$line", column: "$column", data: "$x
   if [ $line != 0 ]; then
     if [ $column == 0 ]; then
       debug $line": "$x
       # TODO: add peers to an array
+      peerList[$line]=$x
     fi
 
     if [ $x == ";" ]; then
@@ -82,3 +84,14 @@ done
 
 # TODO: run through the list, select several peers according to some algorithm
 # (can be random), connect to their git repos, verify them, then update
+index=1
+for peer in $peerList; do
+  if [ $index = 5 ] || [ $index > ${#peerList[@]} ]; then
+    break
+  fi
+
+  # Try calling the peer and adding him as a remote
+  git remote add git://$peer
+
+  index=$(($index + 1))
+done
