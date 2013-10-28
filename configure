@@ -39,10 +39,13 @@ if [ "${1}" = "-h" ] || [ "${1}" = "--help" ]; then
 fi
 
 if [ "${1}" = "-g" ] || [ "${1}" = "--global" ]; then
+  echo "Copying executables..."
   sudo cp -fv src/* /usr/bin/
   # TODO: check if this path is acceptable
+  echo "Copying templates..."
   sudo cp -fvr templates/ /user/share/tbus/
 
+  echo "All done, have fun!"
   exit
 fi
 
@@ -58,19 +61,25 @@ if [ "${1}" = "--uninstall" ]; then
 
   echo "Deleting all local tbus settings and temporary data"
   rm -rfvd $HOME/.tbus
+
+  echo "All done, have fun!"
   exit
 fi
 
 if [ "${1}" = "-l" ] || [ "${1}" = "--local" ]; then
+  echo "Copying executables..."
   cp -fv src/* $HOME/bin/
+  echo "Copying templates..."
   cp -fvr templates $HOME/.tbus/
 
   homeBin=$(cat $HOME/.profile | grep "\$HOME/bin")
   absoluteBin=$(cat $HOME/.profile | grep "$HOME/bin")
   if [ -z "$homeBin" ] && [ -z "$absoluteBin" ]; then
-    echo "Adding tbus executables to PATH"
+    echo "Adding tbus executables to PATH..."
     echo "\n\nexport PATH=\$HOME/bin:\$PATH" >> .profile
   fi
+
+  echo "All done, have fun!"
   exit
 fi
 
