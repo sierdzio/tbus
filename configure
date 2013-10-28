@@ -68,6 +68,7 @@ if [ "${1}" = "-l" ] || [ "${1}" = "--local" ]; then
   homeBin=$(cat $HOME/.profile | grep "\$HOME/bin")
   absoluteBin=$(cat $HOME/.profile | grep "$HOME/bin")
   if [ -z "$homeBin" ] && [ -z "$absoluteBin" ]; then
+    echo "Adding tbus executables to PATH"
     echo "\n\nexport PATH=\$HOME/bin:\$PATH" >> .profile
   fi
   exit
