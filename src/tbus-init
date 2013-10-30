@@ -123,5 +123,6 @@ done
 git init -q
 git add .
 git commit -q -m 'Initialise tbus repository'
+cat .git/git-daemon-export-ok
 
 echo "Done."

@@ -26,3 +26,32 @@ debug () {
     echo "${1}"
   fi
 }
+
+getTbusDir () {
+  TEMP=$TBUSDIR
+
+  if [ -d "$TEMP" ]; then
+    echo $TEMP
+    exit
+  fi
+
+  TEMP=$HOME/.tbus
+  if [ -d "$TEMP" ]; then
+    echo $TEMP
+    exit
+  fi
+
+  TEMP=$(dirname $(which tbus))
+  if [ -d "$TEMP" ]; then
+    echo $TEMP
+    exit
+  fi
+
+  TEMP=$PWD
+  if [ -d "$TEMP" ]; then
+    echo $TEMP
+    exit
+  fi
+
+  exit
+}

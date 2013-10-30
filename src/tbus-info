@@ -15,8 +15,44 @@ Options:
   -d or --daemon - prints out information about all tbus daemons currently in
     use
   -r or --repository or --repo - prints out information about current tbus
-    repository"
+    repository
+  --tbus-dir - returns the current .tbus directory"
   exit
+fi
+
+if [ "${1}" = "--tbus-dir" ]; then
+  getTbusDir
+  tbusDir=$@
+
+  if [ -n "$tbusDir" ]; then
+    echo $tbusDir
+    exit
+  fi
+
+  echo "Could not locate the tbus directory. Please check your tbus installation."
+  exit 1
+fi
+
+
+if [ "${1}" = "-t" ] || [ "${1}" = "--template-dir" ]; then
+  getTbusDir
+  tbusDir=$@
+
+  if [ -z "$tbusDir" ]; then
+    echo "Could not locate the tbus directory. Please check your tbus installation."
+    exit 1
+  fi
+
+  TEMP=$tbusDir/templates
+  if [ -d "$TEMP" ]; then
+    echo $TEMP
+    exit
+  fi
+
+  echo "Could not locate template directory. Please check your tbus installation."
+  echo "tbus looks for templates in \$TBUSDIR/templates, \$HOME/.tbus/templates,"
+  echo "\$PWD/templates and in directory where tbus script resides."
+  exit 1
 fi
 
 if [ "${1}" = "-d" ] || [ "${1}" = "--daemon" ]; then
@@ -150,37 +186,4 @@ if [ "${1}" = "-c" ] || [ "${1}" = "--check-setup" ]; then
   #       there and - maybe - run all the tests
 
   exit
-fi
-
-if [ "${1}" = "-t" ] || [ "${1}" = "--template-dir" ]; then
-  TEMPLATES="templates"
-
-  TEMP=$TBUSDIR/$TEMPLATES
-  if [ -d "$TEMP" ]; then
-    echo $TEMP
-    exit
-  fi
-
-  TEMP=$HOME/.tbus/$TEMPLATES
-  if [ -d "$TEMP" ]; then
-    echo $TEMP
-    exit
-  fi
-
-  TEMP=$(dirname $(which tbus))/$TEMPLATES
-  if [ -d "$TEMP" ]; then
-    echo $TEMP
-    exit
-  fi
-
-  TEMP=$PWD/$TEMPLATES
-  if [ -d "$TEMP" ]; then
-    echo $TEMP
-    exit
-  fi
-
-  echo "Could not locate template directory. Please check your tbus installation."
-  echo "tbus looks for templates in \$TBUSDIR/templates, \$HOME/.tbus/templates,"
-  echo "\$PWD/templates and in directory where tbus script resides."
-  exit 1
 fi

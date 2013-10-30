@@ -61,5 +61,13 @@ sleep 4s
 # TODO: fix paths to point to the tbus repository!
 # TODO: make sure this is read only! See http://git-scm.com/book/ch4-9.html
 # TODO: make sure you are running only one instance!
+getTbusDir
+tbusDir=$@
+
+if [ -z "$tbusDir" ]; then
+  echo $tbusDir
+  exit 1
+fi
+
 debug "Starting the git daemon"
-git daemon --detach --reuseaddr --base-path=$PWD $PWD >> $tbusDirectory/git-daemon.log
+git daemon --detach --reuseaddr --pid-file=$tbusDir/git-pid --base-path=$PWD/../ $PWD/../ >> $tbusDirectory/git-daemon.log
