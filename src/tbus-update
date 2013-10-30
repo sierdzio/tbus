@@ -92,7 +92,11 @@ for peer in $peerList; do
 
   # Try calling the peer and adding him as a remote
   # TODO: decide about naming
-  git remote add git://$peer/
+  git remote add --fetch $peer git://$peer/
 
-  index=$(($index + 1))
+  if [ "$?" = "0" ]; then
+    debug "Added peer: "$peer
+    # TODO: build an array of accepted peers, so that the remotes can be removed later
+    index=$(($index + 1))
+  fi
 done
