@@ -21,10 +21,9 @@ Options:
 fi
 
 if [ "${1}" = "--tbus-dir" ]; then
-  getTbusDir
-  tbusDir=$@
+  tbusDir=$(getTbusDir)
 
-  if [ -n "$tbusDir" ]; then
+  if [ -d "$tbusDir" ]; then
     echo $tbusDir
     exit
   fi
@@ -35,15 +34,14 @@ fi
 
 
 if [ "${1}" = "-t" ] || [ "${1}" = "--template-dir" ]; then
-  getTbusDir
-  tbusDir=$@
+  tbusDir=$(getTbusDir)
 
   if [ -z "$tbusDir" ]; then
     echo "Could not locate the tbus directory. Please check your tbus installation."
     exit 1
   fi
 
-  TEMP=$tbusDir/templates
+  TEMP="$tbusDir/templates"
   if [ -d "$TEMP" ]; then
     echo $TEMP
     exit

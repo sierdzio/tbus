@@ -32,26 +32,24 @@ getTbusDir () {
 
   if [ -d "$TEMP" ]; then
     echo $TEMP
-    exit
+    return
   fi
 
   TEMP=$HOME/.tbus
   if [ -d "$TEMP" ]; then
     echo $TEMP
-    exit
+    return
   fi
 
   TEMP=$(dirname $(which tbus))
   if [ -d "$TEMP" ]; then
     echo $TEMP
-    exit
+    return
   fi
 
   TEMP=$PWD
   if [ -d "$TEMP" ]; then
     echo $TEMP
-    exit
+    return
   fi
-
-  exit
 }
