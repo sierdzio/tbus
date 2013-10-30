@@ -70,4 +70,5 @@ if [ -z "$tbusDir" ]; then
 fi
 
 debug "Starting the git daemon"
-git daemon --detach --reuseaddr --pid-file=$tbusDir/git-pid --base-path=$PWD/../ $PWD/../ >> $tbusDirectory/git-daemon.log
+git daemon --detach --reuseaddr --pid-file=$tbusDir/git-pid --base-path=$PWD $PWD >> $tbusDirectory/git-daemon.log
+#/../ $PWD/../ >> $tbusDirectory/git-daemon.log

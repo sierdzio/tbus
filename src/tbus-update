@@ -91,7 +91,8 @@ for peer in $peerList; do
   fi
 
   # Try calling the peer and adding him as a remote
-  git remote add git://$peer
+  # TODO: decide about naming
+  git remote add git://$peer/
 
   index=$(($index + 1))
 done
