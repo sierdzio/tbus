@@ -84,6 +84,7 @@ done
 
 # TODO: run through the list, select several peers according to some algorithm
 # (can be random), connect to their git repos, verify them, then update
+remotedPeers[0]=""
 index=1
 for peer in $peerList; do
   if [ $index = 5 ] || [ $index > ${#peerList[@]} ]; then
@@ -96,7 +97,20 @@ for peer in $peerList; do
 
   if [ "$?" = "0" ]; then
     debug "Added peer: "$peer
-    # TODO: build an array of accepted peers, so that the remotes can be removed later
+    remotedPeers[$index]=$peer
     index=$(($index + 1))
+  fi
+done
+
+# TODO: inspect the remotes
+currentHead=$(git log -1 --pretty=format:%H --no-abbrev-commit --show-signature)
+
+# --show-signature is there to verify GPG. This needs to be worked upon. TODO.
+
+for peer in $remotedPeersl do
+  currentRemoteHead=$(git log origin/master -1 --pretty=format:%H --no-abbrev-commit --show-signature)
+
+  if [ "$currentHead" != "$currentRemoteHead" ]; then
+    debug "The remote ("$peer") has different HEAD, we need to investigate"
   fi
 done
