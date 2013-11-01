@@ -95,13 +95,15 @@ for peer in $peerList; do
 
   # Try calling the peer and adding him as a remote
   # TODO: decide about naming
+  debug "Adding remote for peer: "$peer
   git remote add --fetch $peer git://$peer/
 
-  if [ "$?" = "0" ]; then
+  # TODO: bring this check back!
+  #if [ "$?" = "0" ]; then
     debug "Added peer: "$peer
     remotedPeers[$index]=$peer
     index=$(($index + 1))
-  fi
+  #fi
 done
 
 debug "Remoted peer list length: "${#remotedPeers[@]}
@@ -113,9 +115,16 @@ debug "Current HEAD revision is: "$currentHead
 # --show-signature is there to verify GPG. This needs to be worked upon. TODO.
 
 for peer in $remotedPeers; do
-  currentRemoteHead=$(git log origin/master -1 --pretty=format:%H --no-abbrev-commit --show-signature)
+  currentRemoteHead=$(git log $peer/master -1 --pretty=format:%H --no-abbrev-commit --show-signature)
+  debug $peer" remote HEAD revision is: "$currentRemoteHead
 
   if [ "$currentHead" != "$currentRemoteHead" ]; then
     debug "The remote ("$peer") has different HEAD, we need to investigate"
+    # TODO: this is just for testing! You need to GPG-verify all the data
+    # before merging. Also, check several peers before deciding to update!
+    git merge $peer/master
+
+    currentHead=$(git log -1 --pretty=format:%H --no-abbrev-commit --show-signature)
+    debug "Current HEAD revision is: "$currentHead
   fi
 done
