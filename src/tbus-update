@@ -53,7 +53,7 @@ debug "$rootTorrentHash"
 # TODO: make sure we are connecting to localhost
 debug "Parse the peer list"
 peerListRaw=$(transmission-remote --torrent $rootTorrentHash --auth $transmissionAuth --info-peers)
-# debug "$peerListRaw"
+debug "$peerListRaw"
 
 input=$(echo "$peerListRaw" |  tr '[\n]' '[;]')
 input=${input//;/ ; }
