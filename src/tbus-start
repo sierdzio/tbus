@@ -57,11 +57,14 @@ debug "Adding the root torrent and setting things up"
 transmission-remote --auth $transmissionAuth --torrent all --start-paused --add $rootFileName >> $tbusDirectory/transmission-daemon.log
 
 debug "Setting things up"
-transmission-remote --auth $transmissionAuth --torrent all --pex --lds -y --no-trash-torrent --uplimit $uploadLimit --portmap --dht --encryption-preferred --no-incomplete-dir --download-dir $downloadDirectory --no-incomplete-dir >> $tbusDirectory/transmission-daemon.log
+transmission-remote --auth $transmissionAuth --torrent all --pex -y --no-trash-torrent --uplimit $uploadLimit --portmap --dht --encryption-preferred --no-incomplete-dir --download-dir $downloadDirectory --no-incomplete-dir >> $tbusDirectory/transmission-daemon.log
 # --log-file $tbusDirectory/transmission-daemon.log
 
 debug "Starting all torrents"
 transmission-remote --auth $transmissionAuth --torrent all --start >> $tbusDirectory/transmission-daemon.log
+
+debug "Setting things up again!"
+transmission-remote --auth $transmissionAuth --torrent all --pex -y --no-trash-torrent --uplimit $uploadLimit --portmap --dht --encryption-preferred --no-incomplete-dir --download-dir $downloadDirectory --no-incomplete-dir >> $tbusDirectory/transmission-daemon.log
 
 debug "Waiting for peer swarm to populate"
 sleep 4s
