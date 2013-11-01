@@ -104,10 +104,11 @@ done
 
 # TODO: inspect the remotes
 currentHead=$(git log -1 --pretty=format:%H --no-abbrev-commit --show-signature)
+debug "Current HEAD revision is: "$currentHead
 
 # --show-signature is there to verify GPG. This needs to be worked upon. TODO.
 
-for peer in $remotedPeersl do
+for peer in $remotedPeers; do
   currentRemoteHead=$(git log origin/master -1 --pretty=format:%H --no-abbrev-commit --show-signature)
 
   if [ "$currentHead" != "$currentRemoteHead" ]; then
