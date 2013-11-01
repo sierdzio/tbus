@@ -82,6 +82,8 @@ for x in $input; do
   fi
 done
 
+debug "Peer list length: "${#peerList[@]}
+
 # TODO: run through the list, select several peers according to some algorithm
 # (can be random), connect to their git repos, verify them, then update
 remotedPeers[0]=""
@@ -101,6 +103,8 @@ for peer in $peerList; do
     index=$(($index + 1))
   fi
 done
+
+debug "Remoted peer list length: "${#remotedPeers[@]}
 
 # TODO: inspect the remotes
 currentHead=$(git log -1 --pretty=format:%H --no-abbrev-commit --show-signature)
