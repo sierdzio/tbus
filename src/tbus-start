@@ -16,11 +16,22 @@ help () {
   Options:
   -u or --upload-speed - limit the upload speed to the number given as the next
     argument. This can also be set up using tbus config file
+  -s or --stop - instead of starting the tbus service, stop all that are already
+    running
 "
 }
 
 if [ "${1}" = "-h" ] || [ "${1}" = "--help" ]; then
   help
+  exit
+fi
+
+if [ "${1}" = "-s" ] || [ "${1}" = "--stop" ]; then
+  echo "Stopping transmission daemon"
+  transmission-remote --auth $transmissionAuth --torrent all --stop
+  echo "Stopping git daemon"
+  killall git-daemon
+  echo "Done"
   exit
 fi
 
@@ -46,7 +57,7 @@ debug "Adding the root torrent and setting things up"
 transmission-remote --auth $transmissionAuth --torrent all --start-paused --add $rootFileName >> $tbusDirectory/transmission-daemon.log
 
 debug "Setting things up"
-transmission-remote --auth $transmissionAuth --torrent all --pex -y --no-trash-torrent --uplimit $uploadLimit --portmap --dht --encryption-preferred --no-incomplete-dir --download-dir $downloadDirectory --no-incomplete-dir >> $tbusDirectory/transmission-daemon.log
+transmission-remote --auth $transmissionAuth --torrent all --pex --lds -y --no-trash-torrent --uplimit $uploadLimit --portmap --dht --encryption-preferred --no-incomplete-dir --download-dir $downloadDirectory --no-incomplete-dir >> $tbusDirectory/transmission-daemon.log
 # --log-file $tbusDirectory/transmission-daemon.log
 
 debug "Starting all torrents"
