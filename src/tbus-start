@@ -47,20 +47,20 @@ fi
 # TODO: implement support for many separate tbus repos (need to track multiple
 #  root torrent files)
 # TODO: make sure to point at least to the root torrent file!
-debug "Starting the torrent daemon"
+#debug "Starting the torrent daemon"
 #transmission-daemon -C --portmap --dht --no-auth --encryption-preferred --no-incomplete-dir --log-file $tbusDirectory/transmission-daemon.log --download-dir $downloadDirectory
 
 #transmission-cli --encryption-preferred --portmap --download-dir $downloadDirectory .root.torrent
 
-debug "Adding the root torrent and setting things up"
+echo "Adding the root torrent and setting things up"
 # $PWD/$rootFileName
 transmission-remote --auth $transmissionAuth --torrent all --start-paused --add $rootFileName >> $tbusDirectory/transmission-daemon.log
 
-debug "Setting things up"
-transmission-remote --auth $transmissionAuth --torrent all --pex -y --no-trash-torrent --uplimit $uploadLimit --portmap --dht --encryption-preferred --no-incomplete-dir --download-dir $downloadDirectory --find $rootFileName --no-incomplete-dir >> $tbusDirectory/transmission-daemon.log
+echo "Setting up transmission settings"
+transmission-remote --auth $transmissionAuth --torrent all --pex -y --no-trash-torrent --uplimit $uploadLimit --portmap --dht --encryption-preferred --no-incomplete-dir --download-dir $downloadDirectory --find $PWD --no-incomplete-dir >> $tbusDirectory/transmission-daemon.log
 # --log-file $tbusDirectory/transmission-daemon.log
 
-debug "Starting all torrents"
+echo "Starting all torrents"
 transmission-remote --auth $transmissionAuth --torrent all --start >> $tbusDirectory/transmission-daemon.log
 
 #debug "Setting things up again!"
